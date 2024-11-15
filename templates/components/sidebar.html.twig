@@ -1,3 +1,4 @@
+{% include 'components/modal.html.twig' %}
 
 {% set current_path = app.request.get('_route') %}
 <div class="sidebar">    
@@ -10,7 +11,7 @@
         <div class="sidebar-section">
         <div class="section-title">
                  Projects
-                 <i class="fa fa-plus"></i>
+                <i data-bs-toggle="modal" data-bs-target="#newProjectModal" id="newProjectModal" class="fa fa-plus"></i>
             </div>
             <a href="#" class="sidebar-item{% if current_path == 'home' %} active{% endif %}">
                 <i class=""></i> Project 1
