@@ -109,7 +109,7 @@ class Card
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
-            $comment->setCard($this); // Set the card for the comment
+            $comment->setCard($this); 
         }
         return $this;
     }
@@ -119,7 +119,7 @@ class Card
         if ($this->comments->contains($comment)) {
             $this->comments->removeElement($comment);
             if ($comment->getCard() === $this) {
-                $comment->setCard(null); // Remove the reference to this card
+                $comment->setCard(null);
             }
         }
         return $this;

@@ -1,0 +1,27 @@
+
+{% set current_path = app.request.get('_route') %}
+<div class="sidebar">    
+    <div class="sidebar-wrapper">
+        <div class="sidebar-section pt-3 pb-3">
+            <a href="{{ path('home') }}" class="sidebar-item active">
+                <i class="fa fa-heart"></i> Trello 
+            </a>
+        </div>
+        <div class="sidebar-section">
+        <div class="section-title">
+                 Projects
+                 <i class="fa fa-plus"></i>
+            </div>
+            <a href="#" class="sidebar-item{% if current_path == 'home' %} active{% endif %}">
+                <i class=""></i> Project 1
+            </a> <a href="#" class="sidebar-item{% if current_path == 'home' %} active{% endif %}">
+                <i class=""></i> Jakas cas calkiem dluga nazwa projektu
+            </a>
+        </div>
+        <div class="sidebar-section">
+            <a href="/logout" class="sidebar-item">
+                <i class="fa fa-arrow-right-from-bracket"></i> Logout
+            </a>
+        </div>
+    </div>
+</div>
