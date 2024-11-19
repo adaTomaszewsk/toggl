@@ -13,11 +13,12 @@
                  Projects
                 <i data-bs-toggle="modal" data-bs-target="#newProjectModal" id="newProjectModal" class="fa fa-plus"></i>
             </div>
-            <a href="#" class="sidebar-item{% if current_path == 'home' %} active{% endif %}">
+            {# <a href="#" class="sidebar-item{% if current_path == 'home' %} active{% endif %}">
                 <i class=""></i> Project 1
             </a> <a href="#" class="sidebar-item{% if current_path == 'home' %} active{% endif %}">
                 <i class=""></i> Jakas cas calkiem dluga nazwa projektu
-            </a>
+            </a> #}
+       {{ render(path('api_projects')) }}
         </div>
         <div class="sidebar-section">
             <a href="/logout" class="sidebar-item">

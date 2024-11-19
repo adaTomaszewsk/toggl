@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity]
+#[ORM\Table(name: 'project_column')]
+
 class Column
 {
     #[ORM\Id]
@@ -17,9 +19,10 @@ class Column
     #[ORM\Column(type: 'string', length: 255)]
     private string $name;
 
-    #[ORM\ManyToOne(targetEntity: Project::class, inversedBy: 'columns')]
+    #[ORM\ManyToOne(targetEntity: Project::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private Project $project;
+    private ?Project $project = null;
+    
 
     #[ORM\OneToMany(mappedBy: 'column', targetEntity: Card::class, cascade: ['persist', 'remove'])]
     private Collection $cards;

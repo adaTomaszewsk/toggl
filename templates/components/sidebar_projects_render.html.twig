@@ -1,0 +1,8 @@
+{% set current_path = app.request.get('_route') %}
+
+
+{% for project in projects %}
+    <a href="#" class="sidebar-item">
+        <i class=""></i> {{ project.name }}
+    </a>
+{% endfor %}
