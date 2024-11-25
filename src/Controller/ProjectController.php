@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProjectController extends AbstractController
@@ -35,5 +36,33 @@ class ProjectController extends AbstractController
         ]);
     }
 
+    #[Route('api/create-project', name:'new_project', methods:['POST'])]
+    public function createProject(Request $request, EntityManagerInterface $entityManager): JsonResponse {
+        $data = json_decode($request->getContent(),true);
+
+        if(!$data || !isset($data['projectName']) || empty(trim($data['projectName']))) {
+            return new JsonResponse(['error' => 'Project name is required'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+        
+        $project = new Project();
+        $project->setName($data['projectName']);
+        $project->setCreatedBy($this->getUser());
+        $entityManager->persist($project);
+
+        foreach ($data['columns'] as $columnName) {
+            if (empty(trim($columnName))) {
+                return new JsonResponse(['error' => 'Column name cannot be empty.'], JsonResponse::HTTP_BAD_REQUEST);
+            }
+            $column = new Column();
+            $column->setName($columnName);
+            $column->setProject($project);
+    
+            $entityManager->persist($column);
+        }
+        $entityManager->flush();
+        
+        return new JsonResponse(['message' => 'Project created successfully!'], JsonResponse::HTTP_CREATED);
+
+    }
 
 }

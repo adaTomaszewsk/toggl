@@ -1,26 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let columnCount = 1; // Zakładamy, że pierwsza kolumna już istnieje
+    let columnCount = 1;
     const modalElement = document.getElementById('newProjectModal');
     const addColumnBtn = document.getElementById('addColumnBtn');
+    const saveProjectBtn = document.querySelector('.btn.btn-primary');
     const columnsContainer = document.getElementById('columnsContainer');
-    const firstColumn = document.getElementById('column-1'); // Pierwsza kolumna
+    const firstColumn = document.getElementById('column-1'); 
 
     if (modalElement) {
-        // Resetujemy modal przy otwieraniu
-        modalElement.addEventListener('shown.bs.modal', function () {
-            columnCount = 1; // Resetujemy licznik kolumn do początkowego stanu
 
-            // Usuwamy wszystkie dodatkowe kolumny (pozostawiamy tylko pierwszą i przycisk "Add Column")
+        modalElement.addEventListener('shown.bs.modal', function () {
+            columnCount = 1; 
+
             Array.from(columnsContainer.children).forEach(child => {
                 if (child !== firstColumn && child !== addColumnBtn) {
                     child.remove();
                 }
             });
 
-            // Czyszczenie pól tekstowych w pierwszej kolumnie
             firstColumn.querySelector('input').value = '';
 
-            // Czyszczenie pól ogólnych w modalu
             const inputs = modalElement.querySelectorAll('input, textarea:not(#columnName-1)');
             inputs.forEach(input => {
                 input.value = '';
@@ -28,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Obsługa przycisku dodawania nowych kolumn
     addColumnBtn.addEventListener('click', function () {
         columnCount++;
         const newColumnDiv = document.createElement('div');
@@ -42,15 +39,54 @@ document.addEventListener('DOMContentLoaded', function () {
             </button>
         `;
 
-        columnsContainer.insertBefore(newColumnDiv, addColumnBtn); // Wstawiamy kolumnę nad przyciskiem
+        columnsContainer.insertBefore(newColumnDiv, addColumnBtn);
 
-        // Obsługa przycisku usuwania dodanej kolumny
         newColumnDiv.querySelector('.remove-column-btn').addEventListener('click', function () {
             const columnId = this.getAttribute('data-column-id');
             const columnElement = document.getElementById(columnId);
             if (columnElement) {
                 columnElement.remove();
             }
+        });
+    });
+
+    saveProjectBtn.addEventListener('click', function() {
+        const projectName = document.getElementById('projectName').value;
+        const columnInputs = document.querySelectorAll('#columnsContainer input');
+        const columns = Array.from(columnInputs).map(input => input.value).filter(value => value.trim() !== '');
+        
+        if (!projectName.trim() || columns.length === 0) {
+            alert('Please provide a project name and at least one column!');
+            return;
+        }
+        const projectData = {
+            projectName: projectName,
+            columns: columns
+        };
+
+        console.log(projectData);
+
+        fetch('/api/create-project', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json'  
+            },
+            body: JSON.stringify(projectData),
+        }).then((response) => {
+
+            if(!response.ok) {
+                throw new Error('Failed to create project.');
+            }
+
+            return response.json();
+
+        }).then(data => {
+            alert(data.message);
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error creating the project.');
         });
     });
 });
