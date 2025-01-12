@@ -3,21 +3,33 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    <link href="{{ asset('styles/project_page.css') }}" rel="stylesheet">{% endblock %}
+    <link href="{{ asset('styles/project_page.css') }}" rel="stylesheet">
+{% endblock %}
+{% block javascripts %}
+  <script src="{{ asset('scripts/project-page-card.js') }}"></script>
+
+{% endblock %}
 
 {% block body %}
  <h1> {{project.name}} </h1>
  <ul>
- <div class="columns-container"> 
+    <div class="columns-container">
     {% for column in project.columns %}
         <div class="column">
-            <div class="title"> {{column.name}} </div>
-            <a href="{{ path('home') }}" class="new-card">
-                <i class="fa fa-add"></i> Add a card 
-            </a>
+            <div class="title">{{ column.name }}</div>
+            <div class="card-container">
+                <div id="inputContainer-{{ column.id }}" class="input-container mt-2" style="display: none;">
+                    <input type="text" class="form-control mb-2" placeholder="Enter a title or paste a link" />
+                    <button class="btn btn-primary btn-sm add-card-btn">Add card</button>
+                    <button class="btn btn-secondary btn-sm close-input-btn">X</button>
+                </div>
+                <div class="new-card">
+                    <i class="fa fa-add"></i> Add a card
+                </div>
+            </div>
         </div>
     {% endfor %}
-    </div>
+</div>
  </ul>
 
 
