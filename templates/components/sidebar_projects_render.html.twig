@@ -2,7 +2,7 @@
 
 
 {% for project in projects %}
-    <a href="#" class="sidebar-item">
-        <i class=""></i> {{ project.name }}
+    <a href="{{ path('project_id', { id: project.id }) }}" class="sidebar-item">
+        {{ project.name }}
     </a>
 {% endfor %}

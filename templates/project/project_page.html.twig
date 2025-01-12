@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('styles/project_page.css') }}" rel="stylesheet">{% endblock %}
+
+{% block body %}
+ <h1> {{project.name}} </h1>
+ <ul>
+ <div class="columns-container"> 
+    {% for column in project.columns %}
+        <div class="column">
+            <div class="title"> {{column.name}} </div>
+            <a href="{{ path('home') }}" class="new-card">
+                <i class="fa fa-add"></i> Add a card 
+            </a>
+        </div>
+    {% endfor %}
+    </div>
+ </ul>
+
+
+{% endblock %}

@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const addColumnBtn = document.getElementById('addColumnBtn');
     const saveProjectBtn = document.querySelector('.btn.btn-primary');
     const columnsContainer = document.getElementById('columnsContainer');
-    const firstColumn = document.getElementById('column-1'); 
+    const firstColumn = document.getElementById('column-1');
 
     if (modalElement) {
 
         modalElement.addEventListener('shown.bs.modal', function () {
-            columnCount = 1; 
+            columnCount = 1;
 
             Array.from(columnsContainer.children).forEach(child => {
                 if (child !== firstColumn && child !== addColumnBtn) {
@@ -50,11 +50,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    saveProjectBtn.addEventListener('click', function() {
+    saveProjectBtn.addEventListener('click', function () {
         const projectName = document.getElementById('projectName').value;
         const columnInputs = document.querySelectorAll('#columnsContainer input');
         const columns = Array.from(columnInputs).map(input => input.value).filter(value => value.trim() !== '');
-        
+
         if (!projectName.trim() || columns.length === 0) {
             alert('Please provide a project name and at least one column!');
             return;
@@ -68,13 +68,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         fetch('/api/create-project', {
             method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json'  
+            headers: {
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(projectData),
         }).then((response) => {
 
-            if(!response.ok) {
+            if (!response.ok) {
                 throw new Error('Failed to create project.');
             }
 
@@ -84,9 +84,9 @@ document.addEventListener('DOMContentLoaded', function () {
             alert(data.message);
             location.reload();
         })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('There was an error creating the project.');
-        });
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error creating the project.');
+            });
     });
 });
