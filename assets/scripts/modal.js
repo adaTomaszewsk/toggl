@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const addColumnBtn = document.getElementById('addColumnBtn');
     const saveProjectBtn = document.querySelector('.btn.btn-primary');
     const columnsContainer = document.getElementById('columnsContainer');
-    const firstColumn = document.getElementById('column-1');
+    const firstColumn = document.getElementById('column-1'); 
 
     if (modalElement) {
 

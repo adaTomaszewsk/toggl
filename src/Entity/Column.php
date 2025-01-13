@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'project_column')]
-
 class Column
 {
     #[ORM\Id]
@@ -33,59 +32,59 @@ class Column
     }
 
     public function getId(): ?int
-{
-    return $this->id;
-}
-public function getName(): string
-{
-    return $this->name;
-}
-
-public function setName(string $name): self
-{
-    if (empty(trim($name))) {
-        throw new \InvalidArgumentException('Column name cannot be empty.');
+    {
+        return $this->id;
+    }
+    public function getName(): string
+    {
+        return $this->name;
     }
 
-    $this->name = $name;
-    return $this;
-}
-public function getProject(): ?Project
-{
-    return $this->project;
-}
-
-public function setProject(?Project $project): self
-{
-    $this->project = $project;
-    return $this;
-}
-
-/**
- * @return Collection|Card[]
- */
-public function getCards(): Collection
-{
-    return $this->cards;
-}
-
-public function addCard(Card $card): self
-{
-    if (!$this->cards->contains($card)) {
-        $this->cards[] = $card;
-        $card->setColumn($this); 
-    }
-    return $this;
-}
-
-public function removeCard(Card $card): self
-{
-    if ($this->cards->contains($card)) {
-        $this->cards->removeElement($card);
-        if ($card->getColumn() === $this) {
-            $card->setColumn(null);
+    public function setName(string $name): self
+    {
+        if (empty(trim($name))) {
+            throw new \InvalidArgumentException('Column name cannot be empty.');
         }
+
+        $this->name = $name;
+        return $this;
     }
-    return $this;
-}
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): self
+    {
+        $this->project = $project;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Card[]
+     */
+    public function getCards(): Collection
+    {
+        return $this->cards;
+    }
+
+    public function addCard(Card $card): self
+    {
+        if (!$this->cards->contains($card)) {
+            $this->cards[] = $card;
+            $card->setColumn($this); 
+        }
+        return $this;
+    }
+
+    public function removeCard(Card $card): self
+    {
+        if ($this->cards->contains($card)) {
+            $this->cards->removeElement($card);
+            if ($card->getColumn() === $this) {
+                $card->setColumn(null);
+            }
+        }
+        return $this;
+    }
 }

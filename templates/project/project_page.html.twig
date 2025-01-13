@@ -17,12 +17,18 @@
     {% for column in project.columns %}
         <div class="column">
             <div class="title">{{ column.name }}</div>
+             <div>
+                    {% for card in column.cards %}
+                        {{ card.title }}
+                    {% endfor %}
+                </div>
             <div class="card-container">
                 <div id="inputContainer-{{ column.id }}" class="input-container mt-2" style="display: none;">
                     <input type="text" class="form-control mb-2" placeholder="Enter a title or paste a link" />
                     <button class="btn btn-primary btn-sm add-card-btn">Add card</button>
                     <button class="btn btn-secondary btn-sm close-input-btn">X</button>
                 </div>
+               
                 <div class="new-card">
                     <i class="fa fa-add"></i> Add a card
                 </div>
